@@ -28,7 +28,6 @@ export default function Main({ children, sx, ...other }) {
           width: `calc(100% - ${NAV.WIDTH}px)`,
         }),
         ...sx,
-        height: '100vh',
         justifyContent: 'center',
       }}
       {...other}

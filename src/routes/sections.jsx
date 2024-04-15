@@ -2,6 +2,8 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import CustomerReviews from 'src/pages/customer-reviews';
+import Orders from 'src/pages/orders';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
@@ -14,6 +16,8 @@ export const AddOrder = lazy(() => import('src/pages/add-order'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const user = true;
+
   const routes = useRoutes([
     {
       element: (
@@ -23,26 +27,30 @@ export default function Router() {
           </Suspense>
         </DashboardLayout>
       ),
-      children: [
-        { element: <IndexPage />, index: true },
-        { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
-        { path: 'add-order', element: <AddOrder /> },
-      ],
+      children: user
+        ? [
+            { element: <IndexPage />, index: true },
+            { path: 'user', element: <UserPage /> },
+            { path: 'products', element: <ProductsPage /> },
+            { path: 'blog', element: <BlogPage /> },
+            { path: 'add-order', element: <AddOrder /> },
+            { path: 'customer-reviews', element: <CustomerReviews /> },
+            { path: 'orders', element: <Orders /> },
+          ]
+        : undefined,
     },
     {
-      path: 'login',
-      element: <LoginPage />,
+      path: '/',
+      element: !user.isLoggedIn ? <LoginPage /> : undefined,
     },
-    {
-      path: '404',
-      element: <Page404 />,
-    },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    },
+    // {
+    //   path: '404',
+    //   element: <Page404 />,
+    // },
+    // {
+    //   path: '*',
+    //   element: <Navigate to="/404" replace />,
+    // },
   ]);
 
   return routes;
