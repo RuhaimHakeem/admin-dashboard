@@ -1,9 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
+import Orders from 'src/pages/orders';
 import DashboardLayout from 'src/layouts/dashboard';
 import CustomerReviews from 'src/pages/customer-reviews';
-import Orders from 'src/pages/orders';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
@@ -13,10 +13,9 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const AddOrder = lazy(() => import('src/pages/add-order'));
 
-// ----------------------------------------------------------------------
-
 export default function Router() {
-  const user = true;
+  const userJSON = localStorage.getItem('user');
+  const user = JSON.parse(userJSON);
 
   const routes = useRoutes([
     {
@@ -27,7 +26,7 @@ export default function Router() {
           </Suspense>
         </DashboardLayout>
       ),
-      children: user
+      children: user?.isLoggedIn
         ? [
             { element: <IndexPage />, index: true },
             { path: 'user', element: <UserPage /> },
@@ -40,17 +39,17 @@ export default function Router() {
         : undefined,
     },
     {
-      path: '/',
-      element: !user.isLoggedIn ? <LoginPage /> : undefined,
+      element: !user?.isLoggedIn ? <LoginPage /> : undefined,
+      index: true,
     },
-    // {
-    //   path: '404',
-    //   element: <Page404 />,
-    // },
-    // {
-    //   path: '*',
-    //   element: <Navigate to="/404" replace />,
-    // },
+    {
+      path: '404',
+      element: <Page404 />,
+    },
+    {
+      path: '*',
+      element: <Navigate to="/404" replace />,
+    },
   ]);
 
   return routes;
