@@ -12,31 +12,31 @@ const navConfig = [
     path: '/',
     icon: icon('ic_analytics'),
   },
-  {
-    title: 'user',
-    path: '/user',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'product',
-    path: '/products',
-    icon: icon('ic_cart'),
-  },
-  {
-    title: 'blog',
-    path: '/blog',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found',
-    path: '/404',
-    icon: icon('ic_disabled'),
-  },
+  // {
+  //   title: 'user',
+  //   path: '/user',
+  //   icon: icon('ic_user'),
+  // },
+  // {
+  //   title: 'product',
+  //   path: '/products',
+  //   icon: icon('ic_cart'),
+  // },
+  // {
+  //   title: 'blog',
+  //   path: '/blog',
+  //   icon: icon('ic_blog'),
+  // },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: icon('ic_lock'),
+  // },
+  // {
+  //   title: 'Not found',
+  //   path: '/404',
+  //   icon: icon('ic_disabled'),
+  // },
   {
     title: 'Add Order',
     path: '/add-order',
@@ -45,12 +45,12 @@ const navConfig = [
   {
     title: 'Customer Reviews',
     path: '/customer-reviews',
-    icon: icon('ic_cart'),
+    icon: icon('ic_user'),
   },
   {
     title: 'Orders',
     path: '/orders',
-    icon: icon('ic_cart'),
+    icon: icon('ic_blog'),
   },
 ];
 

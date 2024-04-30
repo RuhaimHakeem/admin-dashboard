@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableContainer from '@mui/material/TableContainer';
 
 export default function ReviewsTable({ orderReviews }) {
-  const emojis = ['😠', '😟', '😐', '🙂', '😄'];
+  const emojis = ['😠', '😑', '🙂', '😃', '😍'];
 
   return (
     <TableContainer component={Paper}>

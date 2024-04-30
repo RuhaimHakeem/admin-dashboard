@@ -6,7 +6,7 @@ export default function AddOrder() {
   return (
     <>
       <Helmet>
-        <title> Order | Minimal UI </title>
+        <title> Add Order </title>
       </Helmet>
 
       <AddOrderView />

@@ -6,7 +6,7 @@ export default function CustomerReviews() {
   return (
     <>
       <Helmet>
-        <title> Customer Reviews | Minimal UI </title>
+        <title> Customer Reviews </title>
       </Helmet>
 
       <CustomerReviewsView />

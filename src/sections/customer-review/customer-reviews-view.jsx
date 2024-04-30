@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { useState, useEffect } from 'react';
-import { query, where, getDocs, collection, onSnapshot } from 'firebase/firestore';
+import { query, where, collection, onSnapshot } from 'firebase/firestore';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -21,30 +21,15 @@ export default function CustomerReviewsView() {
 
   const getCustomerReviews = async () => {
     setIsLoading(true);
-    unsubscribe = onSnapshot(collection(firestore, 'reviews'), (querySnapshot) => {
-      const reviews = querySnapshot.docs.map((document) => document.data());
+    unsubscribe = onSnapshot(
+      query(collection(firestore, 'orders'), where('isReviewed', '==', true)),
+      (querySnapshot) => {
+        const reviews = querySnapshot.docs.map((document) => document?.data());
 
-      const ordersPromises = reviews.map(async (review) => {
-        const q = query(collection(firestore, 'orders'), where('orderId', '==', review.orderId));
-        const orderSnapshot = await getDocs(q);
-        const order = orderSnapshot.docs[0].data();
-        return {
-          ...order,
-          ...review,
-        };
-      });
-
-      Promise.all(ordersPromises)
-        .then((orders) => {
-          setOrderReviews(orders);
-        })
-        .catch((error) => {
-          console.error('Error fetching orders:', error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    });
+        setOrderReviews(reviews);
+        setIsLoading(false);
+      }
+    );
     return unsubscribe;
   };
 
