@@ -20,11 +20,15 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import TableContainer from '@mui/material/TableContainer';
 import CircularProgress from '@mui/material/CircularProgress';
 
+import { useRouter } from 'src/routes/hooks';
+
 import { firestore } from 'src/config/firebase';
 import { apiInstance } from 'src/config/api-instance';
 
 export function OrdersView() {
   const [orders, setOrders] = useState([]);
+
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -79,7 +83,7 @@ export function OrdersView() {
     try {
       await apiInstance.post(
         'updateStatus',
-        { orderId: order.orderId, mobile: order.mobile },
+        { orderId: order.orderId, mobile: order.mobile, customerName: order.customerName },
         {
           headers: {
             'Content-Type': 'application/json',
@@ -98,6 +102,8 @@ export function OrdersView() {
         ...message,
         message: 'Order status updated successfully!',
       });
+
+      router.push('/customer-reviews');
     } catch (e) {
       console.error(e);
       setMessage({
@@ -176,7 +182,11 @@ export function OrdersView() {
               {orders?.map((order) => (
                 <TableRow>
                   <TableCell align="center">{order.product}</TableCell>
-                  <TableCell align="center">{order.description}</TableCell>
+                  <TableCell>
+                    {order.description.length >= 20
+                      ? `${order.description.slice(0, 20)}...`
+                      : order.description}
+                  </TableCell>
                   <TableCell align="center">{order.mobile}</TableCell>
                   <TableCell align="center">{order.quantity}</TableCell>
                   <TableCell align="center">{order.status}</TableCell>

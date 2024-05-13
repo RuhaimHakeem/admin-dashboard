@@ -17,7 +17,7 @@ export default function ReviewsTable({ orderReviews }) {
         <TableHead>
           <TableRow>
             <TableCell>Product Name</TableCell>
-            <TableCell>Description</TableCell>
+            <TableCell>Customer Name</TableCell>
             <TableCell>Customer Number</TableCell>
             <TableCell>Sentiment</TableCell>
           </TableRow>
@@ -26,7 +26,7 @@ export default function ReviewsTable({ orderReviews }) {
           {orderReviews?.map((review) => (
             <TableRow>
               <TableCell>{review.product}</TableCell>
-              <TableCell>{review.description}</TableCell>
+              <TableCell>{review.customerName || 'No Name'}</TableCell>
               <TableCell>{review.mobile}</TableCell>
               <TableCell sx={{ position: 'relative' }}>
                 <div

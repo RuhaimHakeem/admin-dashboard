@@ -20,6 +20,7 @@ import { bgGradient } from 'src/theme/css';
 import { apiInstance } from 'src/config/api-instance';
 
 const OrderSchema = Yup.object().shape({
+  customerName: Yup.string().min(1, 'Please Enter the Customer Name').required('Required'),
   product: Yup.string().min(1, 'Please Enter the Product').required('Required'),
   mobile: Yup.string().min(11, 'Please provide a valid mobile number').required('Required'),
   description: Yup.string().required('Required'),
@@ -76,7 +77,14 @@ export function AddOrderView() {
 
   const renderForm = (
     <Formik
-      initialValues={{ product: 'Cake', mobile: '', description: '', quantity: '', totalPrice: '' }}
+      initialValues={{
+        customerName: '',
+        product: 'Cake',
+        mobile: '',
+        description: '',
+        quantity: '',
+        totalPrice: '',
+      }}
       onSubmit={(values) => {
         handleClick(values);
       }}
@@ -94,6 +102,15 @@ export function AddOrderView() {
         <form>
           <Stack spacing={3}>
             <Stack spacing={2}>
+              <TextField
+                name="customerName"
+                label="Customer name"
+                onChange={handleChange}
+                value={values.customerName}
+              />
+              {errors.customerName && touched.customerName && (
+                <Alert severity="error">{errors.customerName}</Alert>
+              )}
               <InputLabel>Select the product</InputLabel>
               <Select
                 placeholder="Select"
